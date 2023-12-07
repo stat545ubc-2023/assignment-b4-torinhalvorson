@@ -30,7 +30,7 @@ Exercise 2:
 
 1. 20231204_Assignmentb4_Exercise2.Rmd
   - This file contains the code for Exercise 2, above
-  - The function defined here, igplatinish(), takes a single string consisting exclusively of letters and converts the word to igplatinish
+  - The function defined here, `igplatinish()`, takes a single string consisting exclusively of letters and converts the word to igplatinish
   - Several examples and tests are also provided
   
 2. 20231204_Assignmentb4_Exercise2.md
