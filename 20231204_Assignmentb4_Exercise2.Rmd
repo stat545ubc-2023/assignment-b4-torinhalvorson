@@ -1,0 +1,79 @@
+---
+title: "Exercise 2"
+author: "Torin"
+date: '2023-12-05'
+output: github_document
+---
+
+
+# Exercise 3
+This assignment will convert text to a modified version of piglatin, called atpiglinish. The rules to convert text from English (or any other language) to atpiglinish are as follows:
+
+1. For words beginning with vowels, the first vowel that follows at least one consonant is moved to the beginning of the word, along with the letters that immediately follow it (up to and including the next consonant).
+
+2. For words beginning with consonants, the first vowel, and the letters immediately following it, are moved to the beginning of the word
+
+3. Words too short for this criteria to apply are left alone, but criterion 4 below still applies
+
+4. The sequence 'ish' is added to the end of the word
+
+_Setup:_
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+
+The following code defines a function, atpiglinish, that accepts a single word as a string, and converts it to atpiglinish according to the above rules.
+```{r}
+#' Title
+#'
+#' @param x 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+atpiglinish <- function(x) {
+  #Throw an error if the input is not a character
+  if (!is.character(x) == TRUE) {
+    stop("Input must be of type character.")
+  }
+  
+  #Ensure the function input is alphabetical and contains no spaces, hyphenated words, punctuation or other symbols.
+  if (str_detect(x, "[^a-zA-Z]") == TRUE) {
+    stop("Input must be a single word compoased of only letters with no punctuation.")
+  }
+  
+  #If the word is too short or the criteria cannot be applied, return the word unchanged. The word must be at least two letters and contain at least one consonant followed by a vowel.
+  if (str_length(x) < 2) {
+    output <- x
+  }
+  
+  
+  #Define whether the word begins with a vowel or a consonant
+  if (str_detect(x, "^[aeiouAEIOU]") == TRUE) {
+    #For words beginning with vowels, apply the first rule above
+  }
+  
+  if (str_detect(x, "^[^aeiouAEIOU]") == TRUE) {
+    #For words beginning with consonants, apply the second rule above
+  }
+  
+  
+  #Add 'ish' to the end of the new word
+  output <- paste0(x, "ish")
+  print(output)
+}
+
+```
+
+
+```{r}
+atpiglinish("Torin")
+
+
+```
