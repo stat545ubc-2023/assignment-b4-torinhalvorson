@@ -5,11 +5,57 @@ date: '2023-12-05'
 output: github_document
 ---
 
+
+This exercise will make a barplot of the counts of the most common words in the `prideprejudice` dataset from the `janeaustenr` package.
+
+_Setup_
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+
+
+_Load required packages_
 ```{r}
 library(tidyverse)
 library(janeaustenr)
+library(tidytext)
+```
+
+
+```{r}
+#Make a data frame storing each line of text as a row
+df <- tibble(prideprejudice)
+df
+
+#Using the tidytext::unnest_tokens function, parse text into individual words and store each word in a new column named 'Words'
+words <- df %>%
+  unnest_tokens(output = Words, input = prideprejudice)
+
+#Select stop words using the tidytext package (https://cran.r-project.org/web/packages/tidytext/index.html) 'stop_words' list
+stopwords <- stop_words %>%
+  select(Words = word)
+
+#Remove selected stop words by joining the two tibbles via anti-join, discarding all words with a match in the 'stopwords' tibble
+
+clean_words <- anti_join(words, stopwords)
+
+#Obtain count of each word
+clean_words <- clean_words %>%
+  count(Words, sort = TRUE)
+
+#There are too many words to graph - filter for words appearing >50 times in the text:
+
+clean_words <- clean_words %>%
+  filter(n > 100) %>%
+  mutate(Words = reorder(Words, 1/n))
+
+clean_words
+
+#Graph the clean_words dataset
+ggplot(data = clean_words) + 
+  geom_col(aes(x = Words, y = n, fill = n)) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+  theme_light()
 ```
